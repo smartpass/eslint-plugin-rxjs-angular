@@ -46,7 +46,7 @@
     "*.{js,ts}": "prettier --write"
   },
   "main": "./dist/index.js",
-  "name": "@smartpass/eslint-plugin-rxjs-angular",
+  "name": "@smartpassk12/eslint-plugin-rxjs-angular",
   "optionalDependencies": {},
   "peerDependencies": {
     "eslint": "^8.0.0",
@@ -54,8 +54,7 @@
   },
   "private": false,
   "publishConfig": {
-    "tag": "latest",
-    "registry": "https://npm.pkg.github.com"
+    "tag": "latest"
   },
   "repository": {
     "type": "git",
