@@ -1,7 +1,7 @@
 {
   "author": "Nicholas Jamieson <nicholas@cartant.com>",
   "bugs": {
-    "url": "https://github.com/cartant/eslint-plugin-rxjs-angular/issues"
+    "url": "https://github.com/smartpass/eslint-plugin-rxjs-angular/issues"
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^5.0.0",
@@ -33,7 +33,7 @@
     "dist",
     "docs"
   ],
-  "homepage": "https://github.com/cartant/eslint-plugin-rxjs-angular",
+  "homepage": "https://github.com/smartpass/eslint-plugin-rxjs-angular",
   "keywords": [
     "lint",
     "rules",
@@ -46,7 +46,7 @@
     "*.{js,ts}": "prettier --write"
   },
   "main": "./dist/index.js",
-  "name": "eslint-plugin-rxjs-angular",
+  "name": "@smartpass/eslint-plugin-rxjs-angular",
   "optionalDependencies": {},
   "peerDependencies": {
     "eslint": "^8.0.0",
@@ -54,11 +54,12 @@
   },
   "private": false,
   "publishConfig": {
-    "tag": "latest"
+    "tag": "latest",
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cartant/eslint-plugin-rxjs-angular.git"
+    "url": "https://github.com/smartpass/eslint-plugin-rxjs-angular.git"
   },
   "scripts": {
     "dist": "yarn run lint && yarn run dist:build",
@@ -73,5 +74,5 @@
     "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/prefer-async-pipe.ts",
     "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts"
   },
-  "version": "2.0.0"
+  "version": "2.0.1"
 }
