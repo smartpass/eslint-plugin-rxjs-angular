@@ -98,6 +98,35 @@ ruleTester({ types: true }).run("prefer-composition", rule, {
         }
       `,
     },
+    {
+      code: stripIndent`
+      // optional chaining should work
+      import { Component, OnDestroy, OnInit } from '@angular/core';
+      import { Observable, Subscription } from 'rxjs';
+
+      class SomeThing {
+        obs: Observable<string> = of('foo');
+      }
+
+      @Component({
+        selector: 'optional-chaining-component',
+        template: '<span>{{ value }}</span>',
+      })
+      export class VariableComposedComponent implements OnInit, OnDestroy {
+        value: string;
+        private subscription = new Subscription();
+        ngOnInit() {
+          let st: SomeThing | undefined;
+          let s = st?.obs.subscribe((value) => (this.value = value));
+          this.subscription.add(s);
+          this.subscription.add(st?.obs.subscribe((value) => (this.value = value)));
+        }
+        ngOnDestroy() {
+          this.subscription.unsubscribe();
+        }
+      }
+      `,
+    },
   ],
   invalid: [
     fromFixture(
