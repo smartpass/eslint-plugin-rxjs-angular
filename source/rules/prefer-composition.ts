@@ -198,9 +198,16 @@ const rule = ruleCreator({
       // subscription or if it's assigned to a variable that is added to a
       // subscription.
       const { addCallExpressions, subscriptions } = entry;
-      const parent = getParent(callExpression);
+      let parent = getParent(callExpression);
       if (!parent) {
         return false;
+      }
+      // Handle optional chaining.
+      if (parent.type === "ChainExpression") {
+        parent = getParent(parent);
+        if (!parent) {
+          return false;
+        }
       }
       if (isCallExpression(parent)) {
         const addCallExpression = addCallExpressions.find(
