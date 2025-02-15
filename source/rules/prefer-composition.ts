@@ -12,7 +12,7 @@ import {
   isCallExpression,
   isIdentifier,
   isMemberExpression,
-  isVariableDeclarator,
+  isVariableDeclarator
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
@@ -141,6 +141,18 @@ const rule = ruleCreator({
       return entry;
     }
 
+    function getArgumentName(callExpression: es.CallExpression) {
+      const { arguments: args } = callExpression;
+      if (args.length === 0) {
+        return undefined;
+      }
+      const [arg] = args;
+      if (isIdentifier(arg)) {
+        return arg.name;
+      }
+      return undefined;
+    }
+
     function getMethodCalleeName(callExpression: es.CallExpression) {
       const { callee } = callExpression;
       if (isMemberExpression(callee)) {
@@ -227,7 +239,7 @@ const rule = ruleCreator({
       const { name } = identifier;
       const { addCallExpressions, subscriptions } = entry;
       const addCallExpression = addCallExpressions.find(
-        (callExpression) => getMethodCalleeName(callExpression) === name
+        (callExpression) => getArgumentName(callExpression) === name
       );
       if (!addCallExpression) {
         return false;
@@ -236,8 +248,15 @@ const rule = ruleCreator({
       if (!object || !couldBeSubscription(object)) {
         return false;
       }
-      subscriptions.add(name);
-      return true;
+      if (isMemberExpression(object) && isIdentifier(object.property)) {
+        subscriptions.add(object.property.name);
+        return true;
+      }
+      if (isIdentifier(object)) {
+        subscriptions.add(object.name);
+        return true;
+      }
+      return false;
     }
 
     return {
