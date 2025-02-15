@@ -5,8 +5,8 @@
 
 import { stripIndent } from "common-tags";
 import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/prefer-composition");
 import { ruleTester } from "../utils";
+import rule = require("../../source/rules/prefer-composition");
 
 ruleTester({ types: true }).run("prefer-composition", rule, {
   valid: [
@@ -46,10 +46,10 @@ ruleTester({ types: true }).run("prefer-composition", rule, {
           value: string;
           private subscription = new Subscription();
           ngOnInit() {
-            let subscription = of("foo").subscribe(value => this.value = value);
-            this.subscription.add(subscription);1
-            subscription = of("bar").subscribe(value => this.value = value);
-            this.subscription.add(subscription);
+            let foo = of("foo").subscribe(value => this.value = value);
+            this.subscription.add(foo);
+            foo = of("bar").subscribe(value => this.value = value);
+            this.subscription.add(foo);
           }
           ngOnDestroy() {
             this.subscription.unsubscribe();
